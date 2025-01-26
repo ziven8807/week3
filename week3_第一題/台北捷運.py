@@ -1,15 +1,14 @@
 import json
-import requests
+import urllib.request  
 from collections import defaultdict
 
 # 從網路上下載第二個 JSON 資料（taipei-attractions-assignment-2）
 url_2 = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-2'
-response_2 = requests.get(url_2)
-
-if response_2.status_code == 200:
-    data_2 = response_2.text  # 取得第二個檔案的內容
-else:
-    print(f"無法從 {url_2} 下載資料")
+try:
+    with urllib.request.urlopen(url_2) as response_2:
+        data_2 = response_2.read().decode('utf-8')  # 取得第二個檔案的內容
+except Exception as e:
+    print(f"無法從 {url_2} 下載資料: {e}")
     exit()
 
 # 解析第二個 JSON 資料
@@ -37,12 +36,11 @@ else:
 
 # 從網路上下載第一個 JSON 資料（taipei-attractions-assignment-1）
 url_1 = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1'
-response_1 = requests.get(url_1)
-
-if response_1.status_code == 200:
-    data_1 = response_1.text  # 取得第一個檔案的內容
-else:
-    print(f"無法從 {url_1} 下載資料")
+try:
+    with urllib.request.urlopen(url_1) as response_1:
+        data_1 = response_1.read().decode('utf-8')  # 取得第一個檔案的內容
+except Exception as e:
+    print(f"無法從 {url_1} 下載資料: {e}")
     exit()
 
 # 解析第一個 JSON 資料
@@ -67,13 +65,12 @@ for attraction in results_1:
     mrt_attractions[mrt_station].append(stitle)
 
 # 生成 CSV 文件
-with open('mrt.csv', 'w', newline='', encoding='utf-8') as csv_file:
-
-    # 將每個捷運站和其景點寫入 CSV 文件
+with open('mrt.csv', 'w', newline='', encoding='utf-8') as file:
+    # 寫入每個捷運站和其景點
     for mrt_station, attractions in mrt_attractions.items():
         # 使用逗號連接景點名稱
         attractions_str = ','.join(attractions)
         # 寫入一行數據：捷運站名稱, 景點列表
-        csv_file.write(f'{mrt_station},{attractions_str}\n')
+        file.write(f'{mrt_station},{attractions_str}\n')
 
 print("CSV 文件已成功生成！")
