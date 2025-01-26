@@ -59,7 +59,6 @@ fetch(
       newItems.forEach((item, index) => {
         const titleIndex = currentIndex + index + 1; // 計算標題的編號
 
-        let itemHTML = "";
         // 根據索引決定是大圖還是中圖
         const imageUrls = item.filelist
           .split("https://")
@@ -67,26 +66,53 @@ fetch(
           .map((url) => "https://" + url);
         const imageUrl = imageUrls.length > 0 ? imageUrls[0] : ""; // 取第一個圖片 URL
 
+        let imageItem;
+        let textDiv;
+
         if (index % 5 === 0) {
           // index1與5是大圖
-          itemHTML = `
-            <div class="big-image-item image-item title-${titleIndex}">
-              <img src="${imageUrl}" alt="Title ${titleIndex}" class="big-image image" />
-              <div class="big-image-text text">${item.stitle}</div>
-            </div>
-          `;
+          imageItem = document.createElement("div");
+          imageItem.classList.add(
+            "big-image-item",
+            "image-item",
+            `title-${titleIndex}`
+          );
+
+          const img = document.createElement("img");
+          img.classList.add("big-image", "image");
+          img.src = imageUrl;
+          img.alt = `Title ${titleIndex}`;
+
+          textDiv = document.createElement("div");
+          textDiv.classList.add("big-image-text", "text");
+          textDiv.textContent = item.stitle;
+
+          imageItem.appendChild(img);
+          imageItem.appendChild(textDiv);
         } else {
           // 除了1與5整除的index以外是中圖
-          itemHTML = `
-            <div class="mid-image-item image-item title-${titleIndex}">
-              <img src="${imageUrl}" alt="Title ${titleIndex}" class="mid-image image" />
-              <div class="mid-image-text text">${item.stitle}</div>
-            </div>
-          `;
+          imageItem = document.createElement("div");
+          imageItem.classList.add(
+            "mid-image-item",
+            "image-item",
+            `title-${titleIndex}`
+          );
+
+          const img = document.createElement("img");
+          img.classList.add("mid-image", "image");
+          img.src = imageUrl;
+          img.alt = `Title ${titleIndex}`;
+
+          textDiv = document.createElement("div");
+          textDiv.classList.add("mid-image-text", "text");
+          textDiv.textContent = item.stitle;
+
+          imageItem.appendChild(img);
+          imageItem.appendChild(textDiv);
         }
 
-        // 將創建的 HTML 結構插入新的容器
-        newContainer.innerHTML += itemHTML;
+        // 把每個 item 加入到容器
+        newContainer.appendChild(imageItem);
       });
 
       // 更新 currentIndex，確保下次點擊時是接續在已顯示的item後面
