@@ -7,41 +7,125 @@ fetch(
 
     const attractions = data.data.results; // 獲取所有的景點資料
 
+    // 取得所有的 .image-item 元素（也就是 promotion1~3 和 Title1 ~ 10）
+    const items = document.querySelectorAll(".image-item");
+
+    // 遍歷資料並插入每一個item
     attractions.forEach((item, index) => {
-      console.log(`Item ${index}:`, JSON.stringify(item, null, 2)); // 打印每個項目的詳細資料
-
-      // 獲取所有的 .image-item 元素
-      const items = document.querySelectorAll(".image-item");
-
       if (items[index]) {
+        // 獲取每個項目的圖片和文字區域
         const img = items[index].querySelector(".image"); // 獲取圖片區域
         const textDiv = items[index].querySelector(".text"); // 獲取文字區域
-
-        // 打印圖片 URL 和文字內容
-        console.log("Image URL for item", index, ":", item.filelist); // 輸出圖片列表欄位
-        console.log("Text for item", index, ":", item.stitle); // 輸出文字內容
 
         // 處理 filelist 字串，將圖片 URL 提取出來
         const imageUrls = item.filelist
           .split("https://")
           .filter((url) => url)
           .map((url) => "https://" + url);
-        console.log("Parsed image URLs for item", index, ":", imageUrls); // 打印所有解析出來的圖片 URL
 
         // 確保獲取到圖片 URL
         if (img && imageUrls.length > 0) {
-          img.src = imageUrls[0]; // 更新圖片（這裡選擇使用第一個圖片 URL）
+          img.src = imageUrls[0]; // 使用第一個圖片 URL 更新圖片
         } else {
-          console.error("Image URL not found for item", index); // 如果沒有找到圖片，則報錯
+          console.error("Image URL not found for item", index); // 如果找不到圖片，則報錯
         }
 
         // 更新文字內容
         if (textDiv && item.stitle) {
           textDiv.textContent = item.stitle; // 更新文字內容
         } else {
-          console.error("Text not found for item", index); // 如果沒有找到文字，則報錯
+          console.error("Text not found for item", index); // 如果找不到文字，則報錯
         }
       }
     });
+
+    // 獲取 Load More 按鈕和容器元素
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const container = document.querySelector("body"); // 可以選擇其他容器，這裡選擇 body
+
+    // 目前顯示的資料索引，從上一輪 "Load More" 點擊後的最後index開始
+    let currentIndex = items.length;
+
+    // 按下 Load More 按鈕時執行的func
+    loadMoreBtn.addEventListener("click", function () {
+      // 創建一個新的 big-and-mid-image-container 元素
+      const newContainer = document.createElement("div");
+      newContainer.classList.add("big-and-mid-image-container");
+
+      // 設定新的item數量（假設每次載入 10 個）
+      const newItems = attractions.slice(currentIndex, currentIndex + 10); // 從 data 中切取下一批資料
+
+      // 按照每 5 個顯示 5 個中圖和 3 個大圖來插入新內容
+      newItems.forEach((item, index) => {
+        const titleIndex = currentIndex + index + 1; // 計算標題的編號
+
+        // 根據索引決定是大圖還是中圖
+        const imageUrls = item.filelist
+          .split("https://")
+          .filter((url) => url)
+          .map((url) => "https://" + url);
+        const imageUrl = imageUrls.length > 0 ? imageUrls[0] : ""; // 取第一個圖片 URL
+
+        let imageItem;
+        let textDiv;
+
+        if (index % 5 === 0) {
+          // index1與5是大圖
+          imageItem = document.createElement("div");
+          imageItem.classList.add(
+            "big-image-item",
+            "image-item",
+            `title-${titleIndex}`
+          );
+
+          const img = document.createElement("img");
+          img.classList.add("big-image", "image");
+          img.src = imageUrl;
+          img.alt = `Title ${titleIndex}`;
+
+          textDiv = document.createElement("div");
+          textDiv.classList.add("big-image-text", "text");
+          textDiv.textContent = item.stitle;
+
+          imageItem.appendChild(img);
+          imageItem.appendChild(textDiv);
+        } else {
+          // 除了1與5整除的index以外是中圖
+          imageItem = document.createElement("div");
+          imageItem.classList.add(
+            "mid-image-item",
+            "image-item",
+            `title-${titleIndex}`
+          );
+
+          const img = document.createElement("img");
+          img.classList.add("mid-image", "image");
+          img.src = imageUrl;
+          img.alt = `Title ${titleIndex}`;
+
+          textDiv = document.createElement("div");
+          textDiv.classList.add("mid-image-text", "text");
+          textDiv.textContent = item.stitle;
+
+          imageItem.appendChild(img);
+          imageItem.appendChild(textDiv);
+        }
+
+        // 把每個 item 加入到容器
+        newContainer.appendChild(imageItem);
+      });
+
+      // 更新 currentIndex，確保下次點擊時是接續在已顯示的item後面
+      currentIndex += 10;
+
+      // 把新的容器元素插入到頁面的最後
+      container.appendChild(newContainer);
+
+      // 按下按鈕會自動滾動到頁面底部
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    });
   })
-  .catch((error) => console.error("Error loading the JSON file:", error)); // 載入資料時發生錯誤
+  .catch((error) => console.error("Error loading the JSON file:", error)); // 載入資料時出錯的話
