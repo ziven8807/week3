@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Website</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 左邊區域，顯示標題 -->
+      <div class="left">
+        <div class="title">My Website</div>
+      </div>
+
+      <!-- 右邊區域，顯示項目 -->
+      <div class="right">
+        <!-- 漢堡圖示 -->
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+        <!-- 隱藏的選單項目 -->
+        <div class="menu">
+          <!-- 顯示 "X" 的圖示，預設隱藏 -->
+          <div class="close-menu" onclick="toggleMenu()">X</div>
+          <div class="item">Item 1</div>
+          <div class="item">Item 2</div>
+          <div class="item">Item 3</div>
+          <div class="item">Item 4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 新增的淺藍色底區塊 -->
+    <div class="text-box">Welcome to MyHome</div>
+
+    <!-- 新增的三個小圖片區塊 -->
+    <div class="small-image-container">
+      <div class="small-image-item image-item">
+        <img src="" alt="Promotion 1" class="small-image image" />
+        <div class="small-image-text text"></div>
+      </div>
+      <div class="small-image-item image-item">
+        <img src="" alt="Promotion 2" class="small-image image" />
+        <div class="small-image-text text"></div>
+      </div>
+      <div class="small-image-item image-item">
+        <img src="" alt="Promotion 3" class="small-image image" />
+        <div class="small-image-text text"></div>
+      </div>
+    </div>
+
+    <!-- 新增的2大個4中圖片區塊 -->
+    <div class="big-and-mid-image-container">
+      <div class="big-image-item image-item title-1">
+        <img src="" alt="Title 1" class="big-image image" />
+        <div class="big-image-text text">Title 1</div>
+      </div>
+      <div class="mid-image-item image-item title-2">
+        <img src="" alt="Title 2" class="mid-image image" />
+        <div class="mid-image-text text">Title 2</div>
+      </div>
+      <div class="mid-image-item image-item title-3">
+        <img src="" alt="Title 3" class="mid-image image" />
+        <div class="mid-image-text text">Title 3</div>
+      </div>
+      <div class="mid-image-item image-item title-4">
+        <img src="" alt="Title 4" class="mid-image image" />
+        <div class="mid-image-text text">Title 4</div>
+      </div>
+      <div class="mid-image-item image-item title-5">
+        <img src="" alt="Title 5" class="mid-image image" />
+        <div class="mid-image-text text">Title 5</div>
+      </div>
+      <div class="big-image-item image-item title-6">
+        <img src="" alt="Title 6" class="big-image image" />
+        <div class="big-image-text text">Title 6</div>
+      </div>
+      <div class="mid-image-item image-item title-7">
+        <img src="" alt="Title 7" class="mid-image image" />
+        <div class="mid-image-text text">Title 7</div>
+      </div>
+      <div class="mid-image-item image-item title-8">
+        <img src="" alt="Title 8" class="mid-image image" />
+        <div class="mid-image-text text">Title 8</div>
+      </div>
+      <div class="mid-image-item image-item title-9">
+        <img src="" alt="Title 9" class="mid-image image" />
+        <div class="mid-image-text text">Title 9</div>
+      </div>
+      <div class="mid-image-item image-item title-10">
+        <img src="" alt="Title 10" class="mid-image image" />
+        <div class="mid-image-text text">Title 10</div>
+      </div>
+      <div class="button-container">
+        <button id="load-more-btn">Load More</button>
+      </div>
+    </div>
+
+    <script src="hamburger.js"></script>
+    <script src="taipei.js"></script>
+  </body>
+</html>

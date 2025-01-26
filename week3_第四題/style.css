@@ -1,0 +1,409 @@
+/* 設置 box-sizing，讓所有元素的寬度和高度計算包含padding和border */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden; /* 隱藏水平方向的滾動條 */
+  padding-bottom: 80px; /*給底部的Lord More按鈕留空間放*/
+}
+
+.container {
+  width: 100%; /* 讓容器寬度占滿整個頁面 */
+  display: flex; /* 使用 flexbox 來排版 */
+  justify-content: space-between; /* 讓左右兩側的內容分開 */
+  margin-bottom: 10px; /* 給 My Website 和 Item 項目區塊之間添加底部邊距 */
+  padding-top: 10px; /* 給容器上方增加一些空間 */
+}
+
+.left {
+  display: flex;
+  padding-left: 20px; /* 給左側標題區添加左側內邊距 */
+}
+
+.right {
+  display: flex; /* 使用 flexbox 來排列項目 */
+  padding-right: 20px; /* 給右側項目區添加右側內邊距 */
+}
+
+.item {
+  margin-left: 20px; /* 每個項目之間有些間隔 */
+}
+
+/* 預設情況下，顯示選單項目並固定在右上角 */
+.menu {
+  display: flex; /* 預設為橫向顯示 */
+  flex-direction: row; /* 項目橫向排列 */
+  position: fixed; /* 固定在頁面右上角 */
+  top: 10px; /* 距離頁面上邊的距離 */
+  right: 10px; /* 距離頁面右邊的距離 */
+  background-color: transparent;
+}
+
+/* 漢堡圖示在預設狀態 */
+.hamburger {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  position: fixed; /*固定漢堡位置，不讓其因大於item的大小進而撐大導覽頁導致My Website底下多出空間*/
+  top: 1px; /*將漢堡上移*/
+  right: 20px; /*將漢堡與右邊界留有20px的空間*/
+}
+
+/* 預設隱藏 "X" 圖示 */
+.close-menu {
+  display: none; /* "X" 預設隱藏 */
+  font-size: 20px !important; /*用!important強制將X大小改成20*/
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: bold;
+}
+
+.text-box {
+  display: flex; /* 設為flex容器 */
+  width: 100%; /* 寬度佔滿螢幕 */
+  height: 250px; /* 高度為250px */
+  background-color: lightblue; /* 淺藍色背景 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  text-align: center; /* 文字居中 */
+  font-size: 40px;
+  margin-bottom: 10px; /* 給 Welcome to MyHome底下添加底部邊距 */
+}
+
+/* 更新小圖片區塊 */
+.small-image-container {
+  display: flex; /* 設為 flex 布局 */
+  justify-content: center; /* 讓所有圖片區塊水平居中 */
+  margin-top: 20px; /* 給圖片區塊添加上邊距 */
+  width: 100%; /* 讓容器寬度為 100% */
+  max-width: 1200px; /* 當視口寬度大於 1200px 時，限制容器的最大寬度 */
+  margin-left: auto; /* 左邊距設為 auto 使容器居中 */
+  margin-right: auto; /* 右邊距設為 auto 使容器居中 */
+}
+
+/* 每個小圖片和文字組合的區塊 */
+.small-image-item {
+  width: calc(100% / 3); /* 讓小的圖片佔1/3 */
+  align-items: center;
+  display: grid; /* 使用grid */
+  grid-template-columns: 80px 1fr;
+  padding: 10px; /* 網頁要的與左右圖片20的間距 */
+}
+
+/* 小圖片樣式 */
+.small-image {
+  width: 80px; /* 圖片寬度為 80px */
+  height: 50px; /* 圖片高度為 50px */
+  object-fit: cover; /**保持圖片比例，填充區域 **/
+  max-width: 100%; /**確保圖片不超過其容器的寬度 **/
+}
+
+/* 小圖片文字區塊樣式 */
+.small-image-text {
+  font-size: 1rem;
+  background-color: #f0f0f0; /* 淺灰色背景 */
+  height: 50px; /* 設置文字區塊高度與圖片一致 */
+  display: flex;
+  align-items: center; /* 讓文字垂直居中 */
+  text-align: left; /* 文字左對齊 */
+  color: #333; /* 文字顏色 */
+  padding: 10px; /*讓文字增加10px距離*/
+}
+
+/* 大圖片與中圖片的容器 */
+.big-and-mid-image-container {
+  display: flex; /* 使用 flex 布局 */
+  justify-content: center; /* 讓所有圖片區塊水平居中 */
+  width: 100%; /* 讓容器寬度為 100% */
+  max-width: 1200px; /* 當視口寬度大於 1200px 時，限制容器的最大寬度 */
+  margin: 0 auto; /* 確保圖片區域在父容器中水平居中 */
+  flex-wrap: wrap; /* 允許換行 */
+}
+
+/* 每個大圖片和文字組合的區塊 */
+.big-image-item {
+  width: calc(100% / 3); /* 讓大的圖片佔1/3 */
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* 網頁要的與左右圖片20的間距 */
+  position: relative; /* 使文字可以絕對定位 */
+}
+
+/* 大圖片樣式 */
+.big-image {
+  width: 100%; /* 圖片寬度為100% */
+  height: 200px; /* 圖片高度為200px */
+  max-width: 100%; /* 確保圖片不超過其容器的寬度 */
+}
+
+/* 大圖片文字區塊樣式 */
+.big-image-text {
+  font-size: 16px;
+  color: #fff; /* 文字顏色 */
+  text-align: center;
+  margin: 0;
+  position: absolute; /* 絕對定位 */
+  bottom: 10px; /* 調整底部邊距，讓文字區塊向上移動 */
+  left: 50%; /* 使文字水平方向居中 */
+  transform: translateX(-50%) translateY(-5px); /* 往上移動 5px */
+  background-color: rgba(0, 0, 0, 0.5); /* 加一個半透明的背景，使文字更清晰 */
+  width: calc(100% - 20px); /* 確保文字區塊寬度不會超過圖片，並保留左右邊距 */
+  padding: 10px 0; /* 文字區塊上下內邊距 */
+  box-sizing: border-box; /* 確保padding不會影響寬度計算 */
+  white-space: nowrap; /* 不換行 */
+  overflow: hidden; /* 隱藏溢出的文字 */
+  text-overflow: ellipsis; /* 用省略號代替溢出的文字 */
+}
+
+/* 每個中圖片和文字組合的區塊 */
+.mid-image-item {
+  width: calc(100% / 6); /* 讓中等大小的圖片佔1/6 */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative; /* 使文字可以絕對定位 */
+}
+
+/* 中圖片樣式 */
+.mid-image {
+  width: 100%; /* 圖片寬度為100% */
+  height: 200px; /* 圖片高度為200px */
+  object-fit: cover; /* 保持圖片比例，填充區域 */
+  max-width: 100%; /* 確保圖片不超過其容器的寬度 */
+}
+
+/* 中圖片文字區塊樣式 */
+.mid-image-text {
+  font-size: 16px;
+  color: #fff; /* 文字顏色 */
+  text-align: center;
+  margin: 0;
+  position: absolute; /* 絕對定位 */
+  bottom: 10px; /* 調整底部邊距，讓文字區塊向上移動 */
+  left: 50%; /* 使文字水平方向居中 */
+  transform: translateX(-50%) translateY(-5px); /* 往上移動 5px */
+  background-color: rgba(0, 0, 0, 0.5); /* 加一個半透明的背景，使文字更清晰 */
+  width: calc(100% - 20px); /* 確保文字區塊寬度不會超過圖片，並保留左右邊距 */
+  padding: 10px 0; /* 文字區塊上下內邊距 */
+  box-sizing: border-box; /* 確保padding不會影響寬度計算 */
+  white-space: nowrap; /* 不換行 */
+  overflow: hidden; /* 隱藏溢出的文字 */
+  text-overflow: ellipsis; /* 用省略號代替溢出的文字 */
+}
+
+/* 按鈕容器固定在頁面底部，並確保不重疊內容 */
+.button-container {
+  position: fixed;
+  bottom: 20px; /* 調整這個數值來確保距離頁面底部有一定距離 */
+  left: 50%;
+  transform: translateX(-50%); /* 確保按鈕水平居中 */
+  z-index: 9999; /* 確保按鈕位於最上層 */
+}
+
+#load-more-btn {
+  margin: 0;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: fit-content;
+  display: block;
+}
+
+/* Media Queries for Responsive Design */
+
+/* 當螢幕寬度小於 1024px 時 (例如平板) */
+@media (max-width: 1024px) {
+  .small-image-container {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-wrap: wrap; /* 允許換行 */
+    justify-content: space-between; /* 確保每行元素在水平方向上分布 */
+  }
+
+  .small-image-item {
+    flex: 1 1 calc(50% - 10px); /* 設定每個小圖片的寬度為50%減去間隔 */
+  }
+
+  /* 讓所有圖片區塊垂直排列 */
+
+  .big-and-mid-image-container {
+    display: flex;
+    flex-direction: row; /* 水平排列所有項目 */
+    flex-wrap: wrap; /* 允許換行 */
+    align-items: center; /* 所有項目居中 */
+    padding: 10px; /*讓中、大圖片與小圖片對齊的裁切*/
+    width: 100%; /* 確保容器寬度占滿 */
+  }
+
+  .title-1,
+  .title-2,
+  .title-3,
+  .title-4,
+  .title-5,
+  .title-6,
+  .title-7,
+  .title-8 {
+    width: calc(100% / 4); /* 讓大的圖片佔1/4 */
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* 網頁要的與左右圖片20的間距 */
+    position: relative; /* 使文字可以絕對定位 */
+  }
+
+  .title-9,
+  .title-10 {
+    width: calc(100% / 2); /* 讓大的圖片佔1/4 */
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* 網頁要的與左右圖片20的間距 */
+    position: relative; /* 使文字可以絕對定位 */
+  }
+
+  .big-image-text,
+  .mid-image-text {
+    font-size: 16px; /* 調整文字大小 */
+  }
+}
+
+/* Media Queries for Responsive Design */
+
+/* 當螢幕寬度小於 768px 時 (例如手機) */
+@media (max-width: 768px) {
+  /* 預設顯示漢堡圖示，隱藏 "X" 圖示 */
+  .hamburger {
+    display: block;
+    font-size: 30px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+
+  /* 預設隱藏 "X" 圖示 */
+  .close-menu {
+    display: none; /* "X" 預設隱藏 */
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* 距離選單上邊的距離 */
+    right: 10px; /* 距離選單右邊的距離 */
+    font-weight: bold;
+  }
+
+  /*將item1~4隱藏起來*/
+  .menu {
+    display: none;
+  }
+
+  /* 當選單顯示時，隱藏漢堡圖示，顯示 "X" */
+  .menu.show {
+    display: flex; /* 使用 flexbox 來排版選單項目 */
+    flex-direction: column; /* 垂直排列選單項目 */
+    position: absolute; /* 絕對定位，讓選單浮動於頁面上 */
+    top: 1px; /* 調整選單的垂直位置 */
+    right: 0; /* 讓選單對齊右邊邊緣 */
+    background-color: white; /* 設置選單背景顏色 */
+    border: 1px solid #ccc; /* 設置選單邊框 */
+    padding: 10px; /* 增加內邊距 */
+    width: 150px; /* 設置選單寬度 */
+    height: 100%; /* 調整高度為100% */
+    z-index: 9999; /* 確保選單在最上層，數字越大，層級越高，讓menu不會被圖片覆蓋到 */
+  }
+
+  /* 當選單顯示時，隱藏漢堡圖示，顯示 "X" */
+  .hamburger.active {
+    display: none; /* 隱藏漢堡圖示 */
+  }
+
+  /* 顯示 "X" 圖示 */
+  .close-menu.active {
+    display: block; /* 顯示 "X" */
+  }
+
+  /* 讓所有圖片區塊垂直排列 */
+  .small-image-container,
+  .big-and-mid-image-container {
+    display: flex;
+    flex-direction: column; /* 垂直排列所有項目 */
+    align-items: center; /* 所有項目居中 */
+    width: 100%; /* 確保容器寬度占滿 */
+  }
+
+  /* 讓大圖片在螢幕上完整顯示 */
+  .big-image,
+  .mid-image {
+    width: 100%; /* 圖片寬度占滿容器 */
+    height: auto; /* 高度自動調整，以保持比例 */
+    object-fit: contain; /* 保持圖片比例，並讓圖片完整顯示 */
+  }
+
+  /* 小圖片的容器，去除內邊距 */
+  .small-image-container {
+    display: flex;
+    flex-wrap: wrap; /* 允許換行 */
+    justify-content: center; /* 讓小圖片居中 */
+    width: 100%; /* 確保容器寬度占滿 */
+  }
+
+  .small-image-item {
+    width: 100%; /* 每個小圖片項目寬度為100% */
+    display: flex;
+    justify-content: flex-start; /* 讓圖片與文字左對齊 */
+    align-items: center; /* 讓圖片與文字垂直對齊 */
+    margin-bottom: 10px; /* 每個小圖片項目間隔 */
+    box-sizing: border-box; /* 確保內邊距和邊框不會影響排版 */
+    padding: 10px; /* 去掉小圖片項目的內邊距 */
+  }
+
+  /* 小圖片樣式 */
+  .small-image {
+    width: 80px; /* 小圖片寬度為80px */
+    height: 50px; /* 小圖片高度為50px */
+    object-fit: cover; /* 保持圖片比例，填充區域 */
+    max-width: 100%; /* 確保小圖片不超過容器寬度 */
+  }
+
+  /* 小圖片文字區塊樣式 */
+  .small-image-text {
+    font-size: 1rem;
+    background-color: #f0f0f0; /* 淺灰色背景 */
+    height: 50px; /* 設置文字區塊高度與圖片一致 */
+    display: flex;
+    align-items: center; /* 讓文字垂直居中 */
+    text-align: left; /* 文字左對齊 */
+    color: #333; /* 文字顏色 */
+    padding: 20px; /* 讓文字區塊左右有一定的間距 */
+    width: calc(100%); /* 確保文字區塊不超過容器寬度 */
+    box-sizing: border-box; /* 確保文字區塊不會影響排版 */
+  }
+
+  /* 讓每個大圖片與中圖片的項目寬度為100%，並確保它們不會影響小圖片排版 */
+  .big-image-item,
+  .mid-image-item {
+    width: 100%; /* 每個大圖片和中圖片項目占滿整行 */
+    display: flex;
+    justify-content: center; /* 讓圖片居中 */
+
+    position: relative; /* 用來處理絕對定位的文字 */
+
+    padding: 15px 10px;
+  }
+
+  /* 調整文字區塊大小 */
+  .big-image-text,
+  .mid-image-text {
+    font-size: 16px; /* 調整文字大小 */
+  }
+}
