@@ -1,15 +1,18 @@
 import json
-from collections import defaultdict 
+import requests
+from collections import defaultdict
 
-# 讀取第二份 .txt 文件（taipei-attractions-assignment-2）
-station_mapping = {}
-mrt_attractions = defaultdict(list)  # 用來存放同一捷運站的景點
+# 從網路上下載第二個 JSON 資料（taipei-attractions-assignment-2）
+url_2 = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-2'
+response_2 = requests.get(url_2)
 
-# 讀取第二個文件中的全部內容
-with open('taipei-attractions-assignment-2', 'r', encoding='utf-8') as txt_file_2:
-    data_2 = txt_file_2.read()
+if response_2.status_code == 200:
+    data_2 = response_2.text  # 取得第二個檔案的內容
+else:
+    print(f"無法從 {url_2} 下載資料")
+    exit()
 
-# 解析第二個文件的 JSON 資料
+# 解析第二個 JSON 資料
 try:
     json_data_2 = json.loads(data_2)  # 轉換為 JSON 格式
 except json.JSONDecodeError:
@@ -17,6 +20,9 @@ except json.JSONDecodeError:
     exit()
 
 # 檢查 json_data_2 是dict，並處理 'data' 欄位
+station_mapping = {}
+mrt_attractions = defaultdict(list)  # 用來存放同一捷運站的景點
+
 if isinstance(json_data_2, dict):
     results_2 = json_data_2.get('data', [])
     
@@ -26,14 +32,20 @@ if isinstance(json_data_2, dict):
         mrt_name = station.get('MRT', '')  # 使用 MRT 名稱作為捷運站名稱
         station_mapping[SERIAL_NO_2] = mrt_name
 else:
-    print("第二個 JSON 文件結構錯誤，應該是字典格式")
+    print("第二個 JSON 文件結構錯誤，應該是dict")
     exit()
 
-# 讀取第一份 .txt 文件（taipei-attractions-assignment-1）並根據捷運站對應的 SERIAL_NO 聚集景點
-with open('taipei-attractions-assignment-1', 'r', encoding='utf-8') as txt_file_1:
-    data_1 = txt_file_1.read()  # 讀取第一個文件中的全部內容
+# 從網路上下載第一個 JSON 資料（taipei-attractions-assignment-1）
+url_1 = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1'
+response_1 = requests.get(url_1)
 
-# 解析第一份 JSON 資料
+if response_1.status_code == 200:
+    data_1 = response_1.text  # 取得第一個檔案的內容
+else:
+    print(f"無法從 {url_1} 下載資料")
+    exit()
+
+# 解析第一個 JSON 資料
 try:
     json_data_1 = json.loads(data_1)  # 轉換為 JSON 格式
 except json.JSONDecodeError:
@@ -65,11 +77,3 @@ with open('mrt.csv', 'w', newline='', encoding='utf-8') as csv_file:
         csv_file.write(f'{mrt_station},{attractions_str}\n')
 
 print("CSV 文件已成功生成！")
-
-
-
-
-
-   
-
-
