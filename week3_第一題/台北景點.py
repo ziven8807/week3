@@ -1,16 +1,14 @@
-import csv
 import json
 import re
-import requests  # 用於網路請求
+import urllib.request  
 
 # 從網路上下載第一個 JSON 資料
 url_1 = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1'
-response_1 = requests.get(url_1)
-
-if response_1.status_code == 200:
-    data_1 = response_1.text  # 取得第一個檔案的內容
-else:
-    print(f"無法從 {url_1} 下載資料")
+try:
+    with urllib.request.urlopen(url_1) as response_1:
+        data_1 = response_1.read().decode('utf-8')  # 取得第一個檔案的內容
+except Exception as e:
+    print(f"無法從 {url_1} 下載資料: {e}")
     exit()
 
 # 解析 JSON 資料
@@ -25,12 +23,11 @@ results = json_data.get('data', {}).get('results', [])
 
 # 從網路上下載第二個 JSON 資料
 url_2 = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-2'
-response_2 = requests.get(url_2)
-
-if response_2.status_code == 200:
-    data_2 = response_2.text  # 取得第二個檔案的內容
-else:
-    print(f"無法從 {url_2} 下載資料")
+try:
+    with urllib.request.urlopen(url_2) as response_2:
+        data_2 = response_2.read().decode('utf-8')  # 取得第二個檔案的內容
+except Exception as e:
+    print(f"無法從 {url_2} 下載資料: {e}")
     exit()
 
 # 解析第二個 JSON 資料
@@ -61,9 +58,7 @@ else:
     exit()
 
 # 打開 CSV 文件進行寫入
-with open('spot.csv', 'w', newline='', encoding='utf-8') as csv_file:
-    writer = csv.writer(csv_file)
-
+with open('spot.csv', 'w', newline='', encoding='utf-8') as file:
 
     # 遍歷第一個結果並寫入 CSV 文件
     for attraction in results:
@@ -80,21 +75,7 @@ with open('spot.csv', 'w', newline='', encoding='utf-8') as csv_file:
         image_url_list = image_urls.split('https://')  # 分割字串，提取多個圖片鏈接
         image_url = f"https://{image_url_list[1]}" if image_url_list else ''  # 取第一個圖片鏈接
 
-        # 寫入 CSV 文件
-        writer.writerow([stitle, district, longitude, latitude, image_url])
+        # 寫入每行資料
+        file.write(f"{stitle},{district},{longitude},{latitude},{image_url}\n")
 
 print("CSV 文件已成功生成！")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
